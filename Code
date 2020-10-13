@@ -1,0 +1,36 @@
+import time
+import board
+import neopixel
+import analogio
+import simpleio
+ 
+pixels = neopixel.NeoPixel(board.NEOPIXEL, 10, brightness=.05, auto_write=False)
+pixels.fill((0, 0, 0))
+pixels.show()
+ 
+light = analogio.AnalogIn(board.LIGHT)
+ 
+while True:
+    # light value remapped to pixel position
+    peak1 = simpleio.map_range(light.value, 2000, 10000, 0, 9)
+    peak2 = simpleio.map_range(light.value, 2000, 18000, 0, 9)
+    peak3 = simpleio.map_range(light.value, 2000, 26000, 0, 9)
+    peak4 = simpleio.map_range(light.value, 2000, 34000, 0, 9)
+    peak5 = simpleio.map_range(light.value, 2000, 42000, 0, 9)
+    peak6 = simpleio.map_range(light.value, 2000, 50000, 0, 9)
+    peak7 = simpleio.map_range(light.value, 2000, 58000, 0, 9)
+    peak8 = simpleio.map_range(light.value, 2000, 66000, 0, 9)
+    peak9 = simpleio.map_range(light.value, 2000, 74000, 0, 9)
+    peak10 = simpleio.map_range(light.value, 2000, 92000, 0, 9)
+    peaks = (peak1, peak2, peak3, peak4, peak5, peak6, peak7, peak8, peak9, peak10)
+    print(light.value)
+    print(int(peak))
+    for peak in peak:
+        for i in range(0, 9, 1):
+            if i <= peak(peak):
+                pixels[peak] = (0, 255, 0)
+            else:
+                pixels[i] = (0, 0, 0)
+        pixels.show()
+ 
+        time.sleep(0.01)
